@@ -198,6 +198,8 @@ Muốn trả kết quả nhanh thì kho phải có sẵn hồ sơ trước khi c
 
 **Không làm:** cào profile LinkedIn về kho. Lý do: vi phạm điều khoản LinkedIn; lưu và xử lý dữ liệu cá nhân khi chưa có đồng ý; và kho cào về không có `consent` lẫn `availability`, nên không biết người đó còn tìm việc không.
 
+Cách dữ liệu vào kho (crawler JD, nhận CV, kho thô và kho tinh, hàng đợi xử lý) ở [thu-thap-du-lieu.md](thu-thap-du-lieu.md).
+
 ## 7. Bộ chỉ số
 
 Các ngưỡng là đề xuất, cần team chốt.
