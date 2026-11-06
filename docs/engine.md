@@ -52,6 +52,8 @@ flowchart TB
 
 Năm ô viền đứt là dữ liệu nền hoặc bước kiểm tra mà bản demo chưa có. Ở Layer 3, mục "Chưa thấy trong CV" được hỏi lại người dùng, và mỗi lần xác nhận thành một nhãn dữ liệu.
 
+Khi công ty cần tìm nhiều người cho một JD, engine không chấm từng cặp mà tìm trên kho hồ sơ ứng viên đã lưu sẵn; xem [ho-so-ung-vien.md](ho-so-ung-vien.md). Cách JD và CV vào kho ở [thu-thap-du-lieu.md](thu-thap-du-lieu.md).
+
 ## 3. Quy tắc chấm
 
 Engine đọc JD trước và chấm mức quan trọng chỉ từ JD; sau đó mới đọc CV để so. Mỗi yêu cầu được lưu theo khuôn:
