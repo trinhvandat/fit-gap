@@ -1,6 +1,6 @@
 # PRD – Công cụ Fit & Gap tuyển dụng (tên tạm)
 
-Nov 3, 2026 · @Leonard · Bản nháp v0.1 · cập nhật 06/11/2026
+Nov 3, 2026 · @Leonard · Bản nháp v0.1 · cập nhật 08/11/2026
 
 ## 1. Bối cảnh và vấn đề
 
@@ -126,8 +126,9 @@ Ba vòng lặp giữ sản phẩm chạy: chia sẻ thẻ điểm kéo người 
 
 **Luồng ứng tuyển hộ (ứng viên + recruiter)**, đã chốt 03/11/2026: đội mình chủ động nhắn tin cho ứng viên, lấy CV, rồi nộp vào các JD phù hợp.
 
-1. Tìm ứng viên tiềm năng (ưu tiên người đang tìm việc, đã dùng tool miễn phí).
-2. Nhắn tin mời; ứng viên đồng ý và gửi CV.
+0. Ký thỏa thuận phí với công ty trước khi nộp; JD cào về dùng để chọn công ty đi chào (bổ sung 08/11/2026, [chien-luoc.md](chien-luoc.md) mục 1).
+1. Tìm ứng viên tiềm năng (ưu tiên người đang tìm việc, đã dùng tool miễn phí). Không cào profile: engine soạn chuỗi tìm kiếm, người của mình xem và nhắn từng người, cộng nguồn ứng viên tự tìm tới qua JD đăng ở cộng đồng (chốt 08/11/2026, [ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.1).
+2. Nhắn tin mời kèm link có token; ứng viên đồng ý, gửi CV và xác minh là chủ CV ([ho-so-ung-vien.md](ho-so-ung-vien.md) mục 3.3).
 3. Engine chấm CV với kho JD đang mở, chọn các JD khớp nhất.
 4. Gửi danh sách JD cho ứng viên duyệt; chỉ nộp khi ứng viên đồng ý từng JD.
 5. Sửa CV theo từng JD rồi nộp, kèm fit report cho nhà tuyển dụng.
@@ -276,7 +277,7 @@ Thu tiền theo lượt ở phía ứng viên trước, B2B ở phía công ty s
 | Miễn phí | — | Điểm khớp + 3 gap lớn nhất, thẻ chia sẻ | 0đ |
 | Một JD | Ứng viên | Báo cáo đầy đủ + gợi ý sửa CV cho 1 JD | 49.000đ |
 | Gói tìm việc | Ứng viên | 5 JD + 1 buổi luyện phỏng vấn (V2) | 199.000đ |
-| Ứng tuyển hộ | Doanh nghiệp | Ứng viên đã chấm và sửa CV, kèm fit report | Phí khi tuyển thành công; mức % cần khảo sát |
+| Ứng tuyển hộ | Doanh nghiệp | Ứng viên đã chấm và sửa CV, kèm fit report; chỉ nộp khi đã ký thỏa thuận phí | Phí khi tuyển thành công, không cam kết số lượng; mức % cần khảo sát |
 | Gói recruiter (V2) | Doanh nghiệp | Chấm và xếp hạng CV hàng loạt theo JD | Theo tháng; chốt sau khi thử với 2–3 recruiter |
 
 Cách thử: tuần 1 đưa 2 mức giá cho hai nhóm người dùng khác nhau, đo tỷ lệ chuyển khoản thật. Luồng ứng tuyển hộ không thu phí ứng viên.
@@ -290,6 +291,14 @@ Chính sách đề xuất (đang hiện trên màn thanh toán, cần leader duy
 - **Kênh newsletter / mẹo tìm việc:** trong khoảng 25 review gần nhất của Resume Worded, khoảng 10 review chủ yếu khen newsletter. Chạy một bản tin hoặc page mẹo tìm việc song song với tool để tạo niềm tin.
 - **Hỗ trợ nhanh:** khiếu nại nhiều nhất của Enhancv là hỗ trợ chậm, chỉ qua email. Mình dùng kênh trả lời nhanh như Zalo.
 - **Mốc giá B2B tham khảo:** gói Professional của AG5 là €699/tháng (giá châu Âu, chỉ để biết khung).
+
+**Bổ sung 08/11/2026: engine chạy như một headhunter** ([chien-luoc.md](chien-luoc.md)). Công ty chưa ký thì không có nghĩa vụ trả phí, nên phải ký thỏa thuận trước khi nộp CV. Ba giai đoạn:
+
+- **Giai đoạn 0, chưa có giấy phép:** tool miễn phí làm đầy kho, ứng viên tự nộp, chọn 1–2 nhánh hẹp theo cung và cầu.
+- **Giai đoạn 1, có giấy phép hoặc đối tác:** chào công ty bằng hồ sơ ẩn danh, thu phí khi tuyển thành công.
+- **Giai đoạn 2:** hợp đồng trọn gói với từng công ty đã tuyển thành công qua mình.
+
+Chưa có công ty nào sẵn sàng ký phí, nên bắt đầu từ giai đoạn 0.
 
 ## 9. Đối thủ và tham khảo career-ops
 
@@ -427,6 +436,7 @@ Tuần 1 chạy thủ công chưa cần bước 3–5; bước 1–2 nên bắt 
 | Sản phẩm hai phía khó khởi động: không có ứng viên thì công ty không dùng và ngược lại | Làm phía ứng viên trước, dùng kho ứng viên đã đồng ý để bán cho công ty |
 | AI tự bịa gap hoặc chấm không nhất quán | Quy tắc 3 mức bằng chứng, mức quan trọng cố định, cố định phiên bản model, bộ mẫu đã gán nhãn |
 | Không có dữ liệu kết quả thật nếu ứng viên không báo lại | Email nhắc sau 2 tuần hỏi "bạn có được gọi phỏng vấn không?" |
+| Nộp CV vào JD công khai khi chưa ký với công ty thì không thu được phí; tranh chấp khi ứng viên đã tự nộp hoặc agency khác đã nộp | Ký thỏa thuận phí trước khi nộp; ghi nhật ký nộp; hợp đồng có thời hạn sở hữu ứng viên ([chien-luoc.md](chien-luoc.md)) |
 
 **Rủi ro pháp lý của luồng ứng tuyển hộ:** doanh nghiệp làm dịch vụ việc làm phải có giấy phép do cơ quan quản lý việc làm cấp tỉnh cấp ([Thư viện Pháp luật](https://thuvienphapluat.vn/phap-luat/cong-ty-gioi-thieu-viec-lam-de-duoc-cap-giay-phep-hoat-dong-dich-vu-viec-lam-can-nhung-dieu-kien-gi-954456-124923.html)) và ký quỹ 300 triệu đồng theo Nghị định 23/2021/NĐ-CP ([LuatVietnam](https://luatvietnam.vn/hanh-chinh/giay-phep-dich-vu-viec-lam-570-95385-article.html)). Bộ Nội vụ đang soạn nghị định mới theo Luật Việc làm 2025 ([dự thảo](https://moha.gov.vn/KND/vb/vbdt/Lists/VBDT/Attachments/864/48202510199Bang%20so%20sanh,%20thuyet%20minh.pdf)), nên điều kiện có thể thay đổi. Cần hỏi luật sư trước khi chạy luồng này: làm qua đối tác đã có giấy phép, hay tự xin giấy phép.
 
@@ -440,6 +450,8 @@ Tuần 1 chạy thủ công chưa cần bước 3–5; bước 1–2 nên bắt 
 - [ ] KOL phỏng vấn: leader phụ trách.
 - [ ] Pháp lý luồng ứng tuyển hộ: hỏi luật sư, chọn đi qua đối tác có giấy phép hay tự xin giấy phép.
 - [ ] Khảo sát mức phí headhunt IT trong nước để định giá luồng ứng tuyển hộ.
+- [ ] Chọn nhánh hẹp đầu tiên cho luồng ứng tuyển hộ ([chien-luoc.md](chien-luoc.md) mục 4).
+- [x] Không cào CV hay profile ứng viên; tìm người để nhắn bằng tay (chốt 08/11/2026, [ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.1).
 
 * [ ] Làm rõ quan hệ với nền RMO hiện có (blueprint RMO/CareerOps 03/11/2026): engine Fit & Gap xây mới hay dùng lại các khối của RMO? Ảnh hưởng tới mục 6, 10 và prompt Layer 0.
 * [ ] Chốt ngưỡng bộ chỉ số engine (mục 11) và chọn người lập bảng thời gian lấp gap (mục 6).

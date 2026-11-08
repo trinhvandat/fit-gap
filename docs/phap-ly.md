@@ -152,6 +152,8 @@ Một buổi tư vấn với luật sư chuyên dữ liệu và lao động; ghi
 6. Luồng ứng tuyển hộ: nên hợp tác với đối tác có giấy phép hay tự xin giấy phép? Điều kiện theo nghị định mới của Luật Việc làm 2025 là gì?
 7. Nhắn tin mời ứng viên cần tuân thủ quy định nào về tin nhắn rác và dữ liệu cá nhân?
 8. Mẫu điều khoản sử dụng, chính sách quyền riêng tư, chính sách hoàn tiền nên theo mẫu nào?
+9. Người của mình dán từng profile công khai vào engine để chấm tạm, chấm xong không lưu, trước khi nhắn tin ([ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.3, mức B): có cần căn cứ pháp lý riêng không?
+10. Hai ô đồng ý ([ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.2) và xác minh qua link gửi tới email hoặc SĐT ghi trong CV (mục 3.3) có đủ để chứng minh đồng ý là của chủ thể dữ liệu, cho mục đích giữ hồ sơ 6 tháng để giới thiệu JD khác không?
 
 ## Nguồn
 

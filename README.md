@@ -8,6 +8,9 @@ Tài liệu sản phẩm cho công cụ Fit & Gap tuyển dụng (tên tạm: Kh
 |---|---|
 | [docs/PRD.md](docs/PRD.md) | PRD: bối cảnh, người dùng, tính năng theo giai đoạn, luồng, kiến trúc engine, tiêu chí chất lượng, kinh doanh, đối thủ, chiến lược model, kế hoạch thử nghiệm, rủi ro, layout |
 | [docs/engine.md](docs/engine.md) | Engine: nhiệm vụ, kiến trúc AI/code theo layer, quy tắc chấm, yêu cầu từng layer so với bản demo, thời gian lấp gap, bộ chỉ số, thứ tự làm, câu hỏi cần bàn |
+| [docs/ho-so-ung-vien.md](docs/ho-so-ung-vien.md) | Hồ sơ ứng viên: lead và hồ sơ, nhận diện một người, cách lưu trong PostgreSQL, tìm K người trên kho, phễu tìm thêm, nguồn làm đầy kho |
+| [docs/thu-thap-du-lieu.md](docs/thu-thap-du-lieu.md) | Thu thập dữ liệu: crawler JD, nhận CV có đồng ý, kho thô và kho tinh, hàng đợi xử lý |
+| [docs/chien-luoc.md](docs/chien-luoc.md) | Chiến lược: engine chạy như một headhunter, đánh giá từ sáu góc nhìn, ba giai đoạn, cam kết với công ty |
 | [docs/phap-ly.md](docs/phap-ly.md) | Pháp lý cần kiểm tra trước khi publish: dữ liệu cá nhân, thương mại điện tử, Luật Trí tuệ nhân tạo, dịch vụ việc làm, checklist theo mốc, câu hỏi cho luật sư |
 
 ## Bản gốc
