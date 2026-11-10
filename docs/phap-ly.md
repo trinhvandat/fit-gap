@@ -154,6 +154,7 @@ Một buổi tư vấn với luật sư chuyên dữ liệu và lao động; ghi
 8. Mẫu điều khoản sử dụng, chính sách quyền riêng tư, chính sách hoàn tiền nên theo mẫu nào?
 9. Người của mình dán từng profile công khai vào engine để chấm tạm, chấm xong không lưu, trước khi nhắn tin ([ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.3, mức B): có cần căn cứ pháp lý riêng không?
 10. Hai ô đồng ý ([ho-so-ung-vien.md](ho-so-ung-vien.md) mục 5.2) và xác minh qua link gửi tới email hoặc SĐT ghi trong CV (mục 3.3) có đủ để chứng minh đồng ý là của chủ thể dữ liệu, cho mục đích giữ hồ sơ 6 tháng để giới thiệu JD khác không?
+11. CV từ ATS của công ty (luồng V2, [thu-thap-du-lieu.md](thu-thap-du-lieu.md) mục 4): định hướng là **cần thỏa thuận xử lý dữ liệu (DPA) riêng với từng công ty** — mình là bên xử lý, công ty là bên kiểm soát; CV công ty không trộn vào kho chung, xóa khi kết thúc hợp đồng. Cần luật sư xác nhận: (a) nội dung mẫu DPA theo Nghị định 356/2025; (b) có dùng được một mẫu chuẩn ký với mọi công ty không; (c) khi ứng viên của công ty thực hiện quyền (xóa/rút đồng ý) thì nghĩa vụ chuyển cho bên kiểm soát hay mình xử lý trực tiếp?
 
 ## Nguồn
 

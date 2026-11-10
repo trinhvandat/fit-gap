@@ -55,6 +55,8 @@ Lead là người mình đã nhắn tin nhưng chưa đồng ý. Lead không ch�
 
 `status` có 5 giá trị: contacted, replied, declined, converted (đã gửi CV, có hồ sơ), expired. Hết 30 ngày không phản hồi thì lead tự xóa.
 
+Thời hạn theo `status` (chốt 10/11/2026): lead `contacted` im lặng giữ 30 ngày rồi tự xóa; lead `declined` rời khỏi danh sách active sớm (vd. 7 ngày), chỉ giữ lại một cờ "đừng nhắn lại" để không outreach trùng trong cùng cửa sổ. Lead không phải PII nặng (chưa đồng ý, chỉ có URL + trạng thái) nên 30 ngày là đủ cho một chu kỳ nhắn → chờ trả lời.
+
 ### 3.2 Hồ sơ ứng viên
 
 Hồ sơ chỉ được tạo khi ứng viên đã gửi CV và tick ô đồng ý. Hồ sơ lưu **bằng chứng** của từng kỹ năng, không chỉ lưu việc "có kỹ năng".
@@ -110,6 +112,11 @@ Hồ sơ chỉ được tạo khi ứng viên đã gửi CV và tick ô đồng 
 
 Ứng viên tự gửi CV mới hoặc xác nhận lại thì hồ sơ được làm mới. Hết hạn `searchable_expires` thì hỏi ứng viên có muốn gia hạn không; không gia hạn thì hồ sơ bị ẩn khỏi tìm kiếm và xóa theo chính sách lưu trữ ([phap-ly.md](phap-ly.md) mục 2).
 
+**Thời hạn giữ hồ sơ: 6 tháng (chốt 10/11/2026).** Hợp lý cả về pháp lý (lưu không quá thời gian cần cho mục đích đã nêu) lẫn sản phẩm (ứng viên tech active thường đổi trạng thái trong 3–6 tháng). Hai điểm bắt buộc:
+
+- **Nguồn sự thật của con số là mẫu đồng ý ở mục 5.2**; `searchable_expires` chỉ phản chiếu lại. Code không được tự gia hạn ngầm — tránh lệch giữa điều ứng viên đọc và điều DB giữ.
+- **Nhắc làm tươi giữa kỳ ở mốc ~3 tháng:** gửi một câu hỏi rẻ "bạn còn đang tìm việc không?" để cập nhật `availability` trước khi hồ sơ kịp ôi. Không tốn lượt AI; giảm việc đẩy người đã có việc cho công ty (xem `availability` ở mục 3.2).
+
 ### 3.3 Nhận diện một người và xác minh chủ CV
 
 Một người có thể vào kho nhiều lần: qua tool miễn phí, qua PDF LinkedIn, qua link mời. `cv_hash` chỉ nhận ra cùng một file, không nhận ra cùng một người. Engine không cào CV ([thu-thap-du-lieu.md](thu-thap-du-lieu.md) mục 1), nên ai có hồ sơ cũng đã ít nhất một lần tự gửi CV và tick đồng ý. Việc nhận diện dựa vào đúng lần tương tác đó.
@@ -134,12 +141,12 @@ Giá trị lưu bằng HMAC có khóa bí mật, không dùng sha256 trần: kh�
 
 1. Tự gộp chỉ khi khớp một mã có `verified = true`.
 2. Khớp mã chưa xác minh (SĐT hoặc email chỉ ghi trong CV): đánh dấu "có thể trùng", hỏi lại khi người đó xác minh.
-3. Mã xuất hiện trên hơn N người là mã dùng chung (agency, người gửi hộ, hr@ của công ty), bị loại khỏi việc gộp.
+3. Mã xuất hiện trên quá nhiều người là mã dùng chung (agency, người gửi hộ, hr@ của công ty), bị loại khỏi việc gộp. Ngưỡng tách theo loại mã (chốt 10/11/2026): SĐT `verified` trên **≥ 3 người** → nghi ngờ, không tự gộp, chờ người xem (số cá nhân trùng 3 người là bất thường); email trên **≥ 5 người** → coi là dùng chung. Thêm **blocklist cứng** các pattern hiển nhiên (`hr@`, `recruit@`, `info@`, `careers@`, tên miền của chính công ty) — chặn ngay không cần đợi đủ ngưỡng đếm. Mã đã gắn "dùng chung" không bao giờ dùng để gộp, chỉ dùng để liên hệ nếu còn giá trị. Con số 3 / 5 là điểm khởi đầu, hiệu chỉnh khi có dữ liệu thật về phân bố trùng.
 4. Khi gộp, CV và bằng chứng gom về một `person_id`. Đồng ý không gộp: giữ riêng theo từng lần tick, `searchable` lấy theo lần mới nhất còn hạn.
 
 **Xác minh chủ CV.** Ai cũng tải được CV của người khác lên tool và tick đồng ý thay họ. Đồng ý chỉ có giá trị khi chính chủ thể dữ liệu đồng ý, nên cần chứng minh người tick là chủ CV. Việc xác minh này cũng là điều kiện để ứng viên thực hiện quyền xem, sửa, rút đồng ý, xóa hồ sơ; để gộp hồ sơ an toàn; và để chắc liên hệ còn dùng được trước khi công ty bấm mời.
 
-- Khi ứng viên tick ô thứ hai (mục 5.2), gửi link xác nhận tới email ghi trong CV, hoặc OTP tới SĐT. Link qua email rẻ hơn SMS hay Zalo ZNS.
+- Khi ứng viên tick ô thứ hai (mục 5.2), gửi link xác nhận tới email ghi trong CV. **Email là kênh xác minh bắt buộc cho MVP** (rẻ ~0, dùng chung hạ tầng với câu hỏi xác nhận ở mục 4.2) → đánh dấu `email.verified = true`. **OTP tới SĐT là tùy chọn tăng cường**, không ép mọi người từ đầu: ứng viên có thể xác minh thêm SĐT khi muốn, hoặc khi hệ thống cần mã mạnh để gỡ một ca "có thể trùng". SĐT `verified` là mã mạnh nhất cho việc gộp (bảng mã ở trên), nên bật OTP diện rộng sau nếu dedup bằng email chưa đủ. Chốt 10/11/2026.
 - Chưa bấm link thì `searchable` chưa có hiệu lực: hồ sơ chưa xuất hiện trong kết quả tìm kiếm.
 - Người chỉ tick ô thứ nhất (chỉ dùng thử tool) không phải xác minh, vì hồ sơ không vào kho.
 - Không cần tài khoản hay mật khẩu.
@@ -150,7 +157,7 @@ Giá trị lưu bằng HMAC có khóa bí mật, không dùng sha256 trần: kh�
 lead (profile_url) ──link mời có token──▶ cv_document + consent ──xác minh──▶ person_identifier (verified) ──▶ person
 ```
 
-### 3.4 Cách lưu trong PostgreSQL (đề xuất, chưa chốt)
+### 3.4 Cách lưu trong PostgreSQL (mô hình đã chốt 10/11/2026; DDL chi tiết làm ở phiên riêng)
 
 JSON ở mục 3.2 là cách nhìn logic của một hồ sơ. Lưu nguyên khối đó thành một cột JSONB thì câu lọc kiểu "Go, bằng chứng experience, ≥ 2 năm, dùng gần nhất ≥ 2024" khó viết và khó đánh index. Khối đó cũng đang trộn ba nguồn dữ liệu có vòng đời khác nhau:
 
@@ -165,7 +172,7 @@ Câu trả lời của ứng viên là dữ liệu đắt nhất, vì phải ch�
 | Bảng | Nội dung |
 | --- | --- |
 | `person`, `person_identifier` | Danh tính để gộp trùng (mục 3.3) |
-| `pii_vault` | Schema riêng: tên, liên hệ; mỗi lần mở đều ghi nhật ký |
+| `pii_vault` | **Lớp PII thứ ba, tách riêng** (chốt 10/11/2026): schema PostgreSQL riêng (vd. `pii.*`), khác schema kho tinh (`core.*`) và khác role, có thể cùng instance DB. Giữ PII có cấu trúc: tên, SĐT/email đã chuẩn hóa (dùng để liên hệ + gộp). Engine tìm kiếm và đội vận hành **không** có quyền đọc; chỉ mở khi có hành động hợp lệ cần liên hệ thật (công ty bấm mời → gỡ ẩn liên hệ, hoặc ứng viên thực hiện quyền của mình). Mỗi lần mở ghi nhật ký: ai, lúc nào, cho yêu cầu tuyển nào. Xóa khi hết đồng ý |
 | `cv_document` | Mỗi CV một dòng: `cv_hash`, nguồn (free_tool, linkedin_pdf, outreach, tailored), `parent_cv_id` cho CV đã sửa theo JD |
 | `extraction` | JSONB thô theo (CV, `engine_version`, model); không sửa sau khi ghi |
 | `experience` | Đoạn kinh nghiệm: vai trò, từ–đến, domain, quy mô team, việc cá nhân hay của team |
@@ -219,13 +226,19 @@ flowchart TB
 - **Khớp chắc:** xếp theo đầu thấp của khoảng, vì phía công ty phải tránh báo khớp sai.
 - **Cần hỏi:** đầu cao của khoảng cao nhưng đầu thấp còn thấp vì có mục "Chưa thấy". Engine tự gửi câu hỏi xác nhận cho ứng viên (không tốn AI). Ứng viên trả lời thì `user_confirmed` được ghi vào hồ sơ và người đó được xếp lại.
 
+**Kênh gửi câu hỏi xác nhận (và nhắc làm tươi `availability` ở mục 3.2), chốt 10/11/2026: email + thông báo trong tool cho MVP.** Email là xương sống (dùng chung hạ tầng với xác minh chủ CV ở mục 3.3, chi phí ~0), kèm hiển thị câu hỏi ngay khi ứng viên quay lại tool. Zalo ZNS để sau, chỉ bật khi số liệu cho thấy tỷ lệ trả lời email quá thấp làm nghẽn nhóm "Cần hỏi"; khi đó cần OA Zalo + template duyệt, là hạng mục riêng không chặn MVP. Dùng chung một kênh cho cả xác minh và hỏi xác nhận để khỏi dựng hai hạ tầng. Cần một dòng trong mẫu đồng ý (mục 5.2) cho phép liên hệ về mục đích này (ghi vào phần pháp lý).
+
 ### 4.3 AI kiểm lại 2K người đầu
 
 AI kiểm những thứ SQL không làm được: yêu cầu thuộc ô responsibility và domain, việc của team so với việc cá nhân, câu phủ định, câu trích có đúng nghĩa không. Người bị hạ thì lấy thêm người kế tiếp trong danh sách xếp hạng. Mọi kết luận vẫn đi qua bước code kiểm tra như Layer 3.
 
+Số người kiểm là tham số, không phải hằng số: `kiểm = min(2K, số người cần để đủ K người khớp chắc)`. Dừng sớm khi đã đủ K người có đầu-thấp của khoảng điểm ≥ ngưỡng khớp chắc; nếu không đủ thì kiểm tới trần `2K`. Trần cứng giữ cho chi phí mỗi yêu cầu đoán trước được (metric mục 7). Chốt 10/11/2026.
+
 ### 4.4 Lối mở cho tìm theo vector
 
 MVP chỉ dùng lọc có cấu trúc (hướng A). Nếu bộ test cho thấy bước lọc sót người, vd. ở yêu cầu domain như "hệ thống thanh toán" hoặc kỹ năng ngoài danh mục, thì thêm embedding trên `experience_lines` (pgvector) làm lưới vét. Lưới này chỉ kéo thêm người vào nhóm được AI kiểm lại, không thay bước lọc có cấu trúc (hướng C). Vì `experience_lines` đã được lưu từ đầu, việc thêm vector không cần đọc lại toàn bộ CV.
+
+**Khi nào thêm vector: theo ngưỡng số liệu, không theo mốc lịch (chốt 10/11/2026).** Kích hoạt pgvector khi metric "không sót người khớp" ở mục 7 tụt dưới 95% (tỷ lệ sót > 5%) **và** chẩn đoán cho thấy phần lớn ca sót rơi vào đúng hai loại trên (yêu cầu domain hoặc kỹ năng ngoài danh mục). Nếu sót do nguyên nhân khác (vd. danh mục kỹ năng thiếu `canonical_id`) thì sửa nguyên nhân đó trước, không thêm vector. Đặt mốc số liệu + chẩn đoán nguyên nhân để vừa tránh tối ưu sớm, vừa không bị trôi vô hạn.
 
 ## 5. Phễu tìm thêm khi kho thiếu
 
@@ -327,12 +340,12 @@ Tick khi đã chốt và ghi câu trả lời ngay dưới.
 
 **Thiết kế**
 
-- [ ] Số người AI kiểm lại là 2K, hay chọn theo độ tin của điểm (vd. kiểm tới khi đủ K người khớp chắc)?
-- [ ] Thời hạn giữ hồ sơ 6 tháng và thời hạn giữ lead 30 ngày có hợp lý không?
-- [ ] Gửi câu hỏi xác nhận cho ứng viên qua kênh nào (Zalo, email, trong tool)?
-- [ ] Khi nào thêm tìm theo vector: cứ chờ số liệu sót người, hay đặt sẵn một mốc?
-- [ ] Xác minh chủ CV (mục 3.3): chỉ link qua email, OTP qua SĐT, hay cả hai? Ngưỡng N để coi một mã là mã dùng chung?
-- [ ] Cách lưu lai ở mục 3.4: chốt để đi vào chi tiết từng bảng, bắt đầu từ `experience` và `skill_evidence`.
+- [x] Số người AI kiểm lại là 2K, hay chọn theo độ tin của điểm (vd. kiểm tới khi đủ K người khớp chắc)? Chốt 10/11/2026: `kiểm = min(2K, số người cần để đủ K người khớp chắc)` — dừng sớm khi đã đủ K người có đầu-thấp của khoảng ≥ ngưỡng, nhưng trần cứng là 2K để chi phí đoán trước được cho báo giá. `2K` để thành tham số cấu hình, không phải hằng số chết. Chuyển sang thuần động chỉ khi bộ test cho thấy 2K sót người (metric "không sót ≥ 95%" ở mục 7).
+- [x] Thời hạn giữ hồ sơ 6 tháng và thời hạn giữ lead 30 ngày có hợp lý không? Chốt 10/11/2026: giữ 6 tháng (hồ sơ) và 30 ngày (lead). Thêm: nhắc làm tươi `availability` ở mốc ~3 tháng; lead `declined` rời danh sách active sớm (~7 ngày) chỉ giữ cờ "đừng nhắn lại"; con số 6 tháng lấy mẫu đồng ý làm nguồn sự thật, không tự gia hạn ngầm. Chi tiết ở mục 3.1 và 3.2.
+- [x] Gửi câu hỏi xác nhận cho ứng viên qua kênh nào (Zalo, email, trong tool)? Chốt 10/11/2026: email + thông báo trong tool cho MVP, dùng chung hạ tầng với xác minh chủ CV; Zalo ZNS để sau khi số liệu cho thấy email nghẽn phễu. Chi tiết ở mục 4.2.
+- [x] Khi nào thêm tìm theo vector: cứ chờ số liệu sót người, hay đặt sẵn một mốc? Chốt 10/11/2026: theo ngưỡng số liệu (sót > 5% ở metric mục 7) kèm chẩn đoán nguyên nhân là domain/kỹ năng ngoài danh mục, không đặt mốc lịch, không làm trong MVP. Chi tiết ở mục 4.4.
+- [x] Xác minh chủ CV (mục 3.3): chỉ link qua email, OTP qua SĐT, hay cả hai? Ngưỡng N để coi một mã là mã dùng chung? Chốt 10/11/2026: email bắt buộc cho MVP + OTP SĐT là tùy chọn tăng cường theo nhu cầu (không ép cả hai). Ngưỡng dùng chung tách theo loại: SĐT ≥ 3 người, email ≥ 5 người, kèm blocklist pattern (hr@, recruit@, info@, careers@, tên miền công ty). Chi tiết ở mục 3.3.
+- [x] Cách lưu lai ở mục 3.4: chốt để đi vào chi tiết từng bảng, bắt đầu từ `experience` và `skill_evidence`. Chốt 10/11/2026: cam kết mô hình lai (JSONB `extraction` bất biến + bảng quan hệ cho lọc + bảng chỉ-thêm-dòng cho câu khai + `skill_summary` materialized). DDL đầy đủ (kiểu cột, PK/FK, index, constraint) làm ở phiên riêng, là đầu ra của mục 8 bước 1; bắt đầu từ `experience` và `skill_evidence`. Đã sửa `thu-thap-du-lieu.md` mục 5 để không còn gọi kho tinh là một bảng `candidate_profile` đơn.
 - [x] Không cào CV vào kho; mọi hồ sơ đều qua một lần ứng viên tự gửi CV và tick đồng ý. Chốt 08/11/2026.
 - [x] Bước tìm người để nhắn dùng mức A ở mục 5.1 (thủ công, không cào). Chốt 08/11/2026.
 
